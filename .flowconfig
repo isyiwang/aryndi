@@ -1,0 +1,18 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/graphql
+<PROJECT_ROOT>/node_modules/react
+
+[include]
+<PROJECT_ROOT>/node_modules/lodash
+<PROJECT_ROOT>/node_modules/lodash/throttle.js
+<PROJECT_ROOT>/node_modules/react-apollo
+<PROJECT_ROOT>/node_modules/react-redux
+<PROJECT_ROOT>/node_modules/react-router-dom
+
+[libs]
+
+[lints]
+
+[options]
+module.name_mapper='^lodash\/.+$' -> '<PROJECT_ROOT>/flow-typed/npm/lodash_v4.x.x.js'
+module.name_mapper='^\(react-apollo\)$' -> '<PROJECT_ROOT>/node_modules/\1/index.js.flow'
