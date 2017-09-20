@@ -1,4 +1,15 @@
 class GraphqlController < ApplicationController
+  # WARNING
+  # WARNING
+  # WARNING
+  # DO NOT LEAVE THIS IN IN A PRODUCTION APP. YOU WILL NEED TO DO AUTHENTICATION
+  # IN SOME WAY, PROBABLY THROUGH SOME TOKEN THAT YOU GIVE TO THE CLIENT.
+  # THIS LINE IS JUST HERE SO THAT THE TEMPLATE WORKS OUT OF THE BOX.
+  protect_from_forgery(:except => [:execute])
+  # WARNING ^
+  # WARNING ^
+  # WARNING ^
+
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]

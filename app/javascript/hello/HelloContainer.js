@@ -2,11 +2,10 @@
 
 import { connect } from 'react-redux';
 import Hello from './Hello';
-import { actions } from '../reducers/name';
+import { actions, getName } from '../reducers/name';
 
-const mapStateToProps = (state) => {
-  console.log('giving state to Hello', state);
-  return { name: state.name.name };
+const mapStateToProps = (state, ownProps) => {
+  return { name: ownProps['name'] || getName(state) };
 };
 
 const mapDispatchToProps = (dispatch) => {

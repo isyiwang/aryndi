@@ -17,3 +17,5 @@ export default reducer;
 export const actions = {
   updateName: (name) => ({ type: NAME_SET, name }),
 };
+
+export const getName = (state) => (state.non_apollo.name.name);
