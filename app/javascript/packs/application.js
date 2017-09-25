@@ -9,47 +9,33 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 import throttle from 'lodash/throttle';
-import PropTypes from 'prop-types'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from '../App';
-import HelloContainer from '../hello/HelloContainer';
-import reducer from '../reducers';
+import reducer, { apolloClient } from '../reducers';
 import { loadState, saveState } from '../localStorage';
 
-const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:3000/graphql'
-});
-
-const client = new ApolloClient({ networkInterface });
-
 let store = createStore(
-  combineReducers({
-    non_apollo: reducer,
-    apollo: client.reducer(),
-  }),
+  reducer,
   loadState(), // from local storage
   compose(
-    applyMiddleware(client.middleware()),
-    (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+    applyMiddleware(apolloClient.middleware()),
   ),
 );
-
 store.subscribe(throttle(() => (saveState(store.getState())), 1000));
 
 document.addEventListener('DOMContentLoaded', () => (
   ReactDOM.render(
-    <ApolloProvider client={client} store={store}>
+    <ApolloProvider client={apolloClient} store={store}>
       <Router>
         <App />
       </Router>
     </ApolloProvider>,
-    document.body.appendChild(document.createElement('div')),
+    document.body && document.body.appendChild(document.createElement('div')),
   )
 ));

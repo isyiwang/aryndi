@@ -2,13 +2,32 @@
 
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
+import type { OperationComponent, QueryProps } from 'react-apollo';
 import gql from 'graphql-tag';
 
-class Zoo extends Component<{}> {
-  render() {
-    const { loading, zoo } = this.props.data;
+type TAnimal = {
+  id: string,
+  name: string,
+  gender: string,
+  species: string,
+};
 
-    if (this.props.data.loading) {
+type TZoo = {
+  name: string,
+  animals: TAnimal[],
+};
+
+type TResponse = {
+  zoo: TZoo,
+};
+
+type TProps = TResponse & QueryProps;
+
+class Zoo extends Component<TProps> {
+  render() {
+    const { loading, zoo } = this.props;
+
+    if (loading) {
       return <div>Loading...</div>;
     }
 
@@ -27,7 +46,7 @@ class Zoo extends Component<{}> {
   }
 }
 
-export default graphql(gql`
+const ZOO_QUERY = gql`
   query ZooQuery($id: ID!) {
     zoo(id: $id) {
       name,
@@ -39,4 +58,10 @@ export default graphql(gql`
       }
     }
   }
-`)(Zoo);
+`;
+
+const queryWrapper: OperationComponent<TResponse, {/* InputProps */}, TProps> = graphql(ZOO_QUERY, {
+  props: ({ data }) => ({ ...data }),
+});
+
+export default queryWrapper(Zoo);

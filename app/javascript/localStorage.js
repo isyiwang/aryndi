@@ -1,21 +1,20 @@
 // @flow
 
-const STATE_KEY: string = "__APP_STATE__";
+import type { TReduxState } from './reducers';
 
-export const loadState = () => {
+const STATE_KEY: "__APP_STATE__" = "__APP_STATE__";
+
+export const loadState: () => TReduxState | void = () => {
   try {
     const serializedState: ?string = localStorage.getItem(STATE_KEY);
-    if (serializedState) {
-      return JSON.parse(serializedState);
-    }
-
-    return undefined;
+    return (!!serializedState) ? JSON.parse(serializedState) : undefined;
   } catch (err) {
+    console.error('Unable to deserialize state:', err);
     return undefined;
   }
 }
 
-export const saveState = (state: Object) => {
+export const saveState = (state: TReduxState) => {
   try {
     const serializedState: string = JSON.stringify(state);
     localStorage.setItem(STATE_KEY, serializedState);

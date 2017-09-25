@@ -3,7 +3,10 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "^3.0.1",
+    "apollo-client": "^1.9.3",
     "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.55.0",
+    "flow-typed": "^2.0.0",
     "graphql-tag": "^2.4.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -16,5 +19,8 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^2.8.2"
+  },
+  "scripts": {
+    "flow": "flow"
   }
 }
