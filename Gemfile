@@ -56,7 +56,12 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Graphql!
+# Graphql
 gem 'graphql'
-
 gem 'graphiql-rails', group: :development
+
+# Omniauth
+
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-microsoft_v2_auth', github: 'cbales/omniauth-microsoft_graph'
